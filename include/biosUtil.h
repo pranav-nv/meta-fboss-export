@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "luio.h"
 
 #define BIOS_VER_SIGNATURE      "$BVDT$"
 #define BIOS_VER_INFO_FILE      "/tmp/bios_ver_info.txt"

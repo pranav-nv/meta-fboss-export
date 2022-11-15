@@ -23,7 +23,6 @@
 
 void * 
 mmap_bios_block(const char *block_name) {
-#ifdef UIO_SUPPORTED
     struct uio_info_t *device_info = NULL;
     void *map_base = NULL;
 
@@ -39,14 +38,10 @@ mmap_bios_block(const char *block_name) {
         return NULL;
     }
     return map_base;
-#else
-	return NULL;
-#endif //UIO_SUPPORTED
 }
 
 static void
 munmap_bios_block(void *addr, const char *block_name) {
-#ifdef UIO_SUPPORTED
     struct uio_info_t *device_info = NULL;
 
     device_info = uio_find_devices_by_name(block_name);
@@ -56,7 +51,6 @@ munmap_bios_block(void *addr, const char *block_name) {
     }
 
     uio_munmap(addr, device_info->maps[0].size);
-#endif //UIO_SUPPORTED
 }
 
 int

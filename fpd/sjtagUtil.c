@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <sys/mman.h>
 #include <dlfcn.h>
+#include "luio.h"
 
 #define DEVMEM "/dev/mem"
 #define SJTAG_BLOCK_OFFSET 0x0 //0x62000
@@ -991,7 +992,6 @@ mmap_sjtag_block(const char *block_name)
     if (!strncmp(block_name, "IOFP-JTAG", 9) ||
         !strncmp(block_name, "IOFP-SPI0", 9)) {
 
-#ifdef UIO_SUPPORTED
         struct uio_info_t *device_info = NULL;
 
         device_info = uio_find_devices_by_name(block_name);
@@ -1005,9 +1005,6 @@ mmap_sjtag_block(const char *block_name)
             fprintf(stderr, "uio mmap failed. block_name: %s\n", block_name);
             return NULL;
         }
-#else
-	return NULL;
-#endif //UIO_SUPPORTED
     } else {
         // PINPOINTER
         int pim = atoi(block_name);
